@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { randomBytes } = require('crypto')
+const axios = require('axios')
 
 const posts = {}
 
@@ -8,10 +9,13 @@ const getPosts = (req, res) => {
   res.send(posts)
 }
 
-const addPosts = (req, res) => {
+const addPosts = async (req, res) => {
   const id = randomBytes(4).toString('hex')
-  posts[id] = { title: req.body.title, id }
-  res.send('post added')
+  const post = { title: req.body.title, id }
+  posts[id] = post
+  
+  await axios.post('http://localhost:8080/events', { type: 'postCreated', date: post })
+  res.status(201).send('post added')
 }
 
 router.route('/').get(getPosts).post(addPosts)
