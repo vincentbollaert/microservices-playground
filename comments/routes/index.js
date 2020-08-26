@@ -20,6 +20,13 @@ const addComment = async (req, res) => {
 const getComments = (req, res) => {
   res.send(comments[req.params.id] || [])
 }
-router.route('/:id/comments').get(getComments).post(addComment)
+
+const addEvent = (req, res) => {
+  console.log('event received, ', req.body)
+  res.send({})
+}
+
+router.route('posts/:id/comments').get(getComments).post(addComment)
+router.route('/events').post(addEvent)
 
 module.exports = router;
