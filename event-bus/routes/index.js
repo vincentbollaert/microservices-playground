@@ -6,9 +6,10 @@ const addEvent = (req, res) => {
   const event = req.body
   axios.post('http://localhost:8000/events', event)
   axios.post('http://localhost:8001/events', event)
+  axios.post('http://localhost:8002/events', event)
   axios.post('http://localhost:8010/events', event)
   res.send({ status: 'okay '})
 }
-router.route('/').post(addEvent);
+router.route('/events').post(addEvent);
 
 module.exports = router;
