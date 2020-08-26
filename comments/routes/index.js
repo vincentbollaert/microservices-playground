@@ -25,7 +25,7 @@ const addEvent = async (req, res) => {
   const { type, data } = req.body
 
   if (type === 'commentModerated') {
-    const commentToUpdate = comments[data.postId].comments.find(x => x.id === data.id)
+    const commentToUpdate = comments[data.postId].find(x => x.id === data.id)
     console.log('commentToUpdate', commentToUpdate)
     commentToUpdate.status = data.status
     await axios.post('http://localhost:8080/events', { type: 'commentUpdated', data: commentToUpdate })
@@ -33,7 +33,7 @@ const addEvent = async (req, res) => {
   res.send({})
 }
 
-router.route('posts/:id/comments').get(getComments).post(addComment)
+router.route('/posts/:id/comments').get(getComments).post(addComment)
 router.route('/events').post(addEvent)
 
 module.exports = router;
