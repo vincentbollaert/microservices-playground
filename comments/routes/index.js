@@ -8,7 +8,7 @@ const comments = {}
 const addComment = async (req, res) => {
   const commentId = randomBytes(4).toString('hex')
   const { id: postId } = req.params
-  const comment = { id: commentId, postId, content: req.body.content }
+  const comment = { id: commentId, postId, content: req.body.content, status: 'pending' }
   const postComments = comments[postId] || []
   postComments.push(comment)
   comments[postId] = postComments
