@@ -15,6 +15,10 @@ const addEvents = (req, res) => {
     console.log('COMMENT CREATEDS!!!!!!', posts, data)
     console.log('posts', posts)
   }
+  if (req.body.type === 'commentUpdated') {
+    const commentToUpdate = posts[data.postId].comments.find(x => x.id === data.id)
+    commentToUpdate.status = data.status
+  }
   res.send({})
 }
 
