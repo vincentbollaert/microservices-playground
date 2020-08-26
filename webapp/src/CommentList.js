@@ -2,8 +2,9 @@ import React from 'react';
 
 export default ({ comments }) => (
   <ul>
-    {comments.map(comment => {
-      return <li key={comment.id}>{comment.content}</li>;
+    {comments.map(({ id, content, status }) => {
+      const updatedComment = status === 'approved' ? content : status
+      return <li key={id}>{updatedComment}</li>;
     })}
   </ul>
 );
