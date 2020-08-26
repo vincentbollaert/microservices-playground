@@ -4,28 +4,22 @@ var router = express.Router();
 const posts = {}
 
 const addEvents = (req, res) => {
+  // console.log('req', req.body)
   const { type, data } = req.body
   if (type === 'postCreated') {
-    posts[data.id] = data
+    posts[data.id] = { ...data, comments: [] }
     console.log('POST CREATEDS!!!!!!')
   }
   if (req.body.type === 'commentCreated') {
-    const postToUpdate = posts[data.id]
-    postToUpdate.comments ? postToUpdate.comments.push(data) : [data]
-    console.log('COMMENT CREATEDS!!!!!!')
+    posts[data.postId].comments.push(data)
+    console.log('COMMENT CREATEDS!!!!!!', posts, data)
+    console.log('posts', posts)
   }
   res.send({})
 }
 
 const getPosts = (req, res) => {
-  console.log(req.body)
-  if (req.body.type === 'postCreated') {
-    console.log('POST CREATEDS!!!!!!')
-  }
-  if (req.body.type === 'commentCreated') {
-    console.log('COMMENT CREATEDS!!!!!!')
-  }
-  res.send({})
+  res.send(posts)
 }
 
 router.route('/posts').get(getPosts)
