@@ -1,29 +1,15 @@
 var express = require('express');
 var router = express.Router();
-
-const posts = {}
+const { handleEvent, postsData } = require('../utils')
 
 const addEvents = (req, res) => {
-  // console.log('req', req.body)
   const { type, data } = req.body
-  if (type === 'postCreated') {
-    posts[data.id] = { ...data, comments: [] }
-    console.log('POST CREATEDS!!!!!!')
-  }
-  if (req.body.type === 'commentCreated') {
-    posts[data.postId].comments.push(data)
-    console.log('COMMENT CREATEDS!!!!!!', posts, data)
-    console.log('posts', posts)
-  }
-  if (req.body.type === 'commentUpdated') {
-    const commentToUpdate = posts[data.postId].comments.find(x => x.id === data.id)
-    commentToUpdate.status = data.status
-  }
+  handleEvent({ type, data })
   res.send({})
 }
 
 const getPosts = (req, res) => {
-  res.send(posts)
+  res.send(postsData)
 }
 
 router.route('/posts').get(getPosts)

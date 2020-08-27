@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('query:server');
 var http = require('http');
+const axios = require('axios')
+const { handleEvent } = require('../utils')
 
 /**
  * Get port from environment and store in Express.
@@ -81,11 +83,16 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+async function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log(`query: ${port}`)
+  const events = await axios.get('http://localhost:8080/events')
+  events.data.forEach(({ type, data }) => {
+    console.log('event', type, data)
+    handleEvent({ type, data })
+  })
 }
