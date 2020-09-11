@@ -21,10 +21,10 @@ EXPOSE 8002
 FROM base as dev
 ENV NODE_ENV=development
 RUN npm i --only=development
-CMD nodemon ./bin/www
+CMD ["nodemon", "./bin/www"]
 
 
 
 FROM base as prod
 COPY . /app
-CMD node ./bin/www
+CMD ["node", "./bin/www"]

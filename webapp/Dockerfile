@@ -21,13 +21,13 @@ EXPOSE 3000
 FROM base as dev
 ENV NODE_ENV=development
 RUN npm i --only=development
-CMD nodemon ./bin/www
+CMD ["node", "react-scripts", "start"]
 
 
 
 FROM base as pre-prod
 COPY . .
-CMD node react-scripts build
+CMD ["node", "react-scripts", "build"]
 # RUN rm -rf node_modules
 
 

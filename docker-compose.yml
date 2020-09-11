@@ -1,10 +1,62 @@
 version: '3.4'
 
 services:
-  microservices-playground:
-    image: microservices-playground
-    build: .
-    environment:
-      NODE_ENV: production
+  webapp:
+    build:
+      context: ./webapp
+      target: dev
     ports:
-      - 8000
+      - "3000:80"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  comment-moderation:
+    build:
+      context: ./comment-moderation
+      target: dev
+    ports:
+      - "8002:8002"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  comments:
+    build:
+      context: ./comments
+      target: dev
+    ports:
+      - "8001:8001"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  posts:
+    build:
+      context: ./posts
+      target: dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  query:
+    build:
+      context: ./query
+      target: dev
+    ports:
+      - "8010:8010"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  event-bus:
+    build:
+      context: ./event-bus
+      target: dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
