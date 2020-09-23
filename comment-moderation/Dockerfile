@@ -10,8 +10,8 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 ENV NODE_ENV=production
-WORKDIR /app
-ENV PATH=/app/node_modules/.bin:$PATH
+WORKDIR /opt
+ENV PATH=/opt/node_modules/.bin:$PATH
 COPY package*.json ./
 RUN npm ci && npm cache clean --force
 EXPOSE 8002
@@ -20,11 +20,11 @@ EXPOSE 8002
 
 FROM base as dev
 ENV NODE_ENV=development
-RUN npm i --only=development
+RUN npm install --only=development
 CMD ["nodemon", "./bin/www"]
 
 
 
 FROM base as prod
-COPY . /app
+COPY . /opt
 CMD ["node", "./bin/www"]

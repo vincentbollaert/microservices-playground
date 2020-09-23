@@ -10,8 +10,8 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 ENV NODE_ENV=production
-WORKDIR /app
-ENV PATH=/app/node_modules/.bin:$PATH
+WORKDIR /opt
+ENV PATH=/opt/node_modules/.bin:$PATH
 COPY package*.json ./
 RUN npm ci && npm cache clean --force
 EXPOSE 3000
@@ -20,19 +20,19 @@ EXPOSE 3000
 
 FROM base as dev
 ENV NODE_ENV=development
-RUN npm i --only=development
-CMD ["node", "react-scripts", "start"]
+RUN npm install --only=development
+CMD ["react-scripts", "start"]
 
 
 
 FROM base as pre-prod
 COPY . .
-CMD ["node", "react-scripts", "build"]
+CMD ["react-scripts", "build"]
 # RUN rm -rf node_modules
 
 
 
 FROM nginx as prod
-COPY --from=pre-prod /app/build /usr/share/nginx/html
+COPY --from=pre-prod /opt/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
