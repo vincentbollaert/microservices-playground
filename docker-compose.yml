@@ -8,48 +8,7 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - .:/app
-      - /app/node_modules
-
-  comment-moderation:
-    build:
-      context: ./comment-moderation
-      target: dev
-    ports:
-      - "8002:8002"
-    volumes:
-      - .:/app
-      - /app/node_modules
-
-  comments:
-    build:
-      context: ./comments
-      target: dev
-    ports:
-      - "8001:8001"
-    volumes:
-      - .:/app
-      - /app/node_modules
-
-  posts:
-    build:
-      context: ./posts
-      target: dev
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-
-  query:
-    build:
-      context: ./query
-      target: dev
-    ports:
-      - "8010:8010"
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - ./webapp:/opt
 
   event-bus:
     build:
@@ -58,5 +17,49 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./event-bus:/opt
+    networks:
+      - eventBus
+
+  comment-moderation:
+    build:
+      context: ./comment-moderation
+      target: dev
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./comment-moderation:/opt
+
+  comments:
+    build:
+      context: ./comments
+      target: dev
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./comments:/opt
+
+  posts:
+    build:
+      context: ./posts
+      target: dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./posts:/opt
+
+  query:
+    depends_on:
+      - "event-bus"
+    build:
+      context: ./query
+      target: dev
+    ports:
+      - "8010:8010"
+    volumes:
+      - ./query:/opt
+    networks:
+      - eventBus
+
+networks:
+    eventBus:
