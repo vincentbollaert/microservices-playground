@@ -14,7 +14,7 @@ const addPosts = async (req, res) => {
   const post = { title: req.body.title, id }
   posts[id] = post
   
-  await axios.post('http://localhost:8080/events', { type: 'postCreated', data: post })
+  await axios.post('http://event-bus-serv:8080/events', { type: 'postCreated', data: post })
   res.status(201).send('post added')
 }
 

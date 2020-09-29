@@ -8,10 +8,10 @@ const addEvent = (req, res) => {
   const event = req.body
   events.push(event)
 
-  axios.post('http://localhost:8000/events', event)
-  axios.post('http://localhost:8001/events', event)
-  axios.post('http://localhost:8002/events', event)
-  axios.post('http://localhost:8010/events', event)
+  axios.post('http://posts-serv-clusterip:8000/events', event)
+  // axios.post('http://localhost:8001/events', event)
+  // axios.post('http://localhost:8002/events', event)
+  // axios.post('http://localhost:8010/events', event)
   res.send({ status: 'okay '})
 }
 
