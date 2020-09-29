@@ -7,7 +7,7 @@ export default ({ postId }) => {
   const onSubmit = async event => {
     event.preventDefault();
 
-    await axios.post(`http://localhost:8001/posts/${postId}/comments`, {
+    await axios.post(`http://comments-serv:8001/posts/${postId}/comments`, {
       content
     });
 

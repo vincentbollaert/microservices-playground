@@ -9,7 +9,7 @@ const addEvent = async (req, res) => {
     console.log('moderate comment')
     const status = data.content.includes('orange') ? 'rejected' : 'approved'
 
-    await axios.post('http://localhost:8080/events', {
+    await axios.post('http://event-bus-serv:8080/events', {
       type: 'commentModerated',
       data: { ...data, status }
     })

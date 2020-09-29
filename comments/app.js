@@ -15,7 +15,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-if (process.env.NODE_ENV !== 'productin') {
+if (process.env.NODE_ENV !== 'production') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
 }

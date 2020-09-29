@@ -13,7 +13,7 @@ const addComment = async (req, res) => {
   postComments.push(comment)
   comments[postId] = postComments
 
-  await axios.post('http://localhost:8080/events', { type: 'commentCreated', data: comment })
+  await axios.post('http://event-bus-serv:8080/events', { type: 'commentCreated', data: comment })
   res.status(201).send(comment)
 }
 
@@ -28,7 +28,7 @@ const addEvent = async (req, res) => {
     const commentToUpdate = comments[data.postId].find(x => x.id === data.id)
     console.log('commentToUpdate', commentToUpdate)
     commentToUpdate.status = data.status
-    await axios.post('http://localhost:8080/events', { type: 'commentUpdated', data: commentToUpdate })
+    await axios.post('http://event-bus-serv:8080/events', { type: 'commentUpdated', data: commentToUpdate })
   }
   res.send({})
 }
