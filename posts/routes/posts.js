@@ -18,6 +18,7 @@ const addPosts = async (req, res) => {
   res.status(201).send('post added')
 }
 
-router.route('/').get(getPosts).post(addPosts)
+router.route('/').get(getPosts)
+router.route('/create').post(addPosts)
 
 module.exports = router;

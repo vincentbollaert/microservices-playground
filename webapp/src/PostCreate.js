@@ -8,7 +8,7 @@ export default () => {
     event.preventDefault();
 
     // await axios.post('http://posts-serv-clusterip:8000/posts', {
-    await axios.post('http://posts.com/posts', {
+    await axios.post('http://posts.com/posts/create', {
       title
     });
 
