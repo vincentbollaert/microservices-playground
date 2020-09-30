@@ -35,7 +35,7 @@ CMD ["react-scripts", "build"]
 
 
 
-FROM nginx as prod
-COPY --from=pre-prod /opt/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# FROM nginx as prod
+# COPY --from=pre-prod /opt/build /usr/share/nginx/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]
