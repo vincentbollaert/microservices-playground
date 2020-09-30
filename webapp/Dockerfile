@@ -30,7 +30,8 @@ CMD ["react-scripts", "start"]
 
 FROM base as pre-prod
 COPY . .
-CMD ["react-scripts", "build"]
+# follwowing tut they only run start not build. fix later by adding that watch type flag
+CMD ["react-scripts", "start"]
 # RUN rm -rf node_modules
 
 
