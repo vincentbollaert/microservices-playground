@@ -6,6 +6,7 @@ const events = []
 
 const addEvent = (req, res) => {
   const event = req.body
+  console.log('event bus: received ', event)
   events.push(event)
 
   axios.post('http://posts-serv-clusterip:8000/events', event)
