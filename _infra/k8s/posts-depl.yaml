@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts # manage pods with label app:posts
+  template:
+    metadata:
+      labels:
+        app: posts # create pod with label app:posts
+    spec:
+      containers:
+      - name: posts
+        image: vincentza/posts
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-serv-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: posts
+  ports:
+  - name: posts
+    port: 8000
+    targetPort: 8000

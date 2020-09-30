@@ -90,7 +90,7 @@ async function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log(`query: ${port}`)
-  const events = await axios.get('http://localhost:8080/events')
+  const events = await axios.get('http://event-bus-serv:8080/events')
   events.data.forEach(({ type, data }) => {
     console.log('event', type, data)
     handleEvent({ type, data })

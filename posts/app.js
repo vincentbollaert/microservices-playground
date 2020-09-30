@@ -2,11 +2,13 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 const cors = require('cors')
+var dotenv = require('dotenv')
 
 var eventsRouter = require('./routes/events');
 var postsRouter = require('./routes/posts');
+
+dotenv.config({ path: './config.env' })
 
 var app = express();
 
@@ -14,7 +16,10 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'production') {
+  var morgan = require('morgan');
+  app.use(morgan('dev'));
+}
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

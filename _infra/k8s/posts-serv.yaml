@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-serv # must be unique - this will be the IP
+spec:
+  type: NodePort
+  selector:
+    app: posts # find pods with label app: posts
+  ports:
+  - name: posts # just for logging
+    protocol: TCP
+    port: 8000 # port of nodeport service
+    targetPort: 8000 # desired app port
+
+# notes
+# access on $minikubeIp:$generatedPort/$selectorName
+#           192.168.12.12:31150/posts

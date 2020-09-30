@@ -9,6 +9,9 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+# React-scripts docker bug: https://github.com/facebook/create-react-app/issues/8688
+ENV CI=true
+
 ENV NODE_ENV=production
 WORKDIR /opt
 ENV PATH=/opt/node_modules/.bin:$PATH
@@ -27,12 +30,13 @@ CMD ["react-scripts", "start"]
 
 FROM base as pre-prod
 COPY . .
-CMD ["react-scripts", "build"]
+# follwowing tut they only run start not build. fix later by adding that watch type flag
+CMD ["react-scripts", "start"]
 # RUN rm -rf node_modules
 
 
 
-FROM nginx as prod
-COPY --from=pre-prod /opt/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# FROM nginx as prod
+# COPY --from=pre-prod /opt/build /usr/share/nginx/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]

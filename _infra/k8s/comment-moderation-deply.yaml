@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment-moderation
+  template:
+    metadata:
+      labels:
+        app: comment-moderation
+    spec:
+      containers:
+      - name: comment-moderation
+        image: vincentza/comment-moderation
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-moderation-serv
+spec:
+  type: ClusterIP
+  selector:
+    app: comment-moderation
+  ports:
+  - name: comment-moderation
+    port: 8002
+    targetPort: 8002
