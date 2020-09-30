@@ -9,6 +9,9 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+# React-scripts docker bug: https://github.com/facebook/create-react-app/issues/8688
+ENV CI=true
+
 ENV NODE_ENV=production
 WORKDIR /opt
 ENV PATH=/opt/node_modules/.bin:$PATH
